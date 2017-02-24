@@ -9,13 +9,14 @@ install: true
 env:
   - GROUP=weaveworksdemos COMMIT=$TRAVIS_COMMIT TAG=$TRAVIS_TAG REPO=orders-aws;
 
+
 script:
   - set -e
   - sudo ./scripts/build.sh;
   - travis_wait ./test/test.sh unit.py
   - ./test/test.sh component.py
   - docker build -t weaveworksdemos/json-server ./test/json-server/
-  - ./test/test.sh container.py --tag $TAG
+# - ./test/test.sh container.py --tag $TAG
 
 after_success:
   - set -e;
