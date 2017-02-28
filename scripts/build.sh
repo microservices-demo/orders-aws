@@ -20,9 +20,15 @@ if [[ -z "$COMMIT" ]] ; then
     exit 1
 fi
 
+if [[ "$(uname)" == "Darwin" ]]; then
+    DOCKER_CMD=docker
+else
+    DOCKER_CMD="sudo docker"
+fi
+
 CODE_DIR=$(cd $SCRIPT_DIR/..; pwd)
 echo $CODE_DIR
-scripts/docker.sh run --rm $DOCKER_UID_ARGS \
+$DOCKER_CMD run --rm $DOCKER_UID_ARGS \
                 -v $CODE_DIR:/usr/src/mymaven \
                 -w /usr/src/mymaven \
                 maven:3.2-jdk-8 \
@@ -32,4 +38,4 @@ cp -r $CODE_DIR/docker $CODE_DIR/target/docker/
 cp $CODE_DIR/target/uberjar.jar $CODE_DIR/target/docker/${IMAGE}/app.jar
 
 REPO=${GROUP}/${IMAGE}
-    scripts/docker.sh build -t ${REPO}:${COMMIT} $CODE_DIR/target/docker/${IMAGE};
+    $DOCKER_CMD build -t ${REPO}:${COMMIT} $CODE_DIR/target/docker/${IMAGE};
