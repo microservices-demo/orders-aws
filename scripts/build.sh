@@ -35,7 +35,8 @@ $DOCKER_CMD run --rm $DOCKER_UID_ARGS \
                 mvn -Dmaven.repo.local=/usr/src/mymaven/.m2 -DskipTests package -U
 
 cp -r $CODE_DIR/docker $CODE_DIR/target/docker/
-cp $CODE_DIR/target/uberjar.jar $CODE_DIR/target/docker/${IMAGE}/app.jar
+cp -r $CODE_DIR/target/*.jar $CODE_DIR/target/docker/${IMAGE}
+
 
 REPO=${GROUP}/${IMAGE}
     $DOCKER_CMD build -t ${REPO}:${COMMIT} $CODE_DIR/target/docker/${IMAGE};
