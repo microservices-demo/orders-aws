@@ -2,8 +2,12 @@ package works.weave.socks.spring.aws
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
 import com.amazonaws.services.dynamodbv2.model._
+
 import org.slf4j.LoggerFactory
+
 import scala.collection.JavaConverters._
+import scala.language.reflectiveCalls
+
 import works.weave.socks.spring.Ops._
 
 abstract class DynamoSchema(dynamoConnection : DynamoConfiguration) {
