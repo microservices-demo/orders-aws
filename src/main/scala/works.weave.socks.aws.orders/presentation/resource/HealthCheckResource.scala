@@ -15,10 +15,10 @@ import works.weave.socks.spring.aws.DynamoConfiguration
 
 @Component
 @Path("health")
-class HealthCheckResource() {
+class HealthCheckResource(dynamoConnection : DynamoConfiguration) {
 
   @GET
-  def getHealthCheck(dynamoConnection : DynamoConfiguration) : Response = {
+  def getHealthCheck() : Response = {
     Log.info("health check requested")
     val dateNow = Calendar.getInstance().getTime();
 
@@ -34,7 +34,7 @@ class HealthCheckResource() {
     try {
       val table = dynamoConnection.client.describeTable("orders")
     } catch {
-      case _ : Throwable => dynamoDBHealth("status") = "err"
+      case unknown : Throwable => dynamoDBHealth("status") = "err"
     }
 
     val map = Map("health" -> Array(ordersHealth, dynamoDBHealth))
