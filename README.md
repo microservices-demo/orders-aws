@@ -1,5 +1,4 @@
-
-# orders-aws
+# DEPRECATED: orders-aws
 
 A microservices-demo service that provides ordering capabilities.
 
